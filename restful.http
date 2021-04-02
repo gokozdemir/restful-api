@@ -1,0 +1,52 @@
+@BASE_URL = http://localhost:3000/api
+
+GET {{BASE_URL}}
+
+
+###
+GET {{BASE_URL}}/users
+
+###
+GET {{BASE_URL}}/users/99
+
+###
+
+GET http://localhost:3000/
+
+###
+POST {{BASE_URL}}/users
+Content-Type: application/json
+
+{
+    "name": "gökhan1 özdemir",
+    "email": "ozdemirgok16@gmail.com",
+    "userName": "gokozdemir12",
+    "password": "12345"
+}
+
+###
+POST http://localhost:3000/
+Content-Type: application/json
+
+{
+    "isim" : "gökhan",
+    "yas" : "28"
+}
+
+###
+POST http://localhost:3000/
+Content-Type: application/x-www-form-urlencoded
+
+username=gokhan&yas=32
+
+###
+PATCH {{BASE_URL}}/users/60670837824d592c4c111091
+Content-Type: application/json
+
+{
+    "userName": "denemeUser"
+}
+
+###
+DELETE {{BASE_URL}}/users/6067085b824d592c4c111094
+

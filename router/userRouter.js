@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../dbMongo/models/userModel')
+const createError = require('http-errors')
 
 router.get('/', async (req, res) => {
     const allUsers = await User.find({});
@@ -20,7 +21,11 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
+    delete req.body.createdAt;
+    delete req.body.updatedAt;
+    delete req.body.password;
+    
     try{
         const sonuc = await User.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true, runValidators:true});
         if(sonuc){
@@ -31,7 +36,7 @@ router.patch('/:id', async (req, res) => {
             })
         }
     }catch(err){
-        console.log("Güncellerken Hata: " + err)
+        next(err)
     }
 })
 
@@ -43,12 +48,10 @@ router.delete('/:id', async (req, res, next) => {
                 mesaj: "Kullanıcı silindi"
             })
         } else {
-            const errorObject = new Error('User is not found!')
-            errorObject.errorCode = 404;
-            throw errorObject;
+            throw createError(404, 'User is not found');
         }
     } catch (err) {
-        next(err)
+        next(createError(400, err))
     }
 })
 

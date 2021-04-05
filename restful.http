@@ -40,13 +40,13 @@ Content-Type: application/x-www-form-urlencoded
 username=gokhan&yas=32
 
 ###
-PATCH {{BASE_URL}}/users/60670837824d592c4c111091
+PATCH {{BASE_URL}}/users/6065b7da19a18c26dc193e0d
 Content-Type: application/json
 
 {
-    "userName": "denemeUser"
+    "_id": "6065b7da19a18c26dc193e07"
 }
 
 ###
-DELETE {{BASE_URL}}/users/6067085b824d592c4c111097
+DELETE {{BASE_URL}}/users/6067085b824d592c4c11109
 

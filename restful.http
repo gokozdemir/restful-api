@@ -48,5 +48,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{BASE_URL}}/users/6067085b824d592c4c111094
+DELETE {{BASE_URL}}/users/6067085b824d592c4c111097
 

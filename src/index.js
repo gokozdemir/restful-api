@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('../dbMongo/dbConnection')
+const errorMiddleware = require('../dbMongo/middleware/errorMiddleware')
 
 //ROUTES
 const userRouter = require('../router/userRouter');
@@ -15,14 +16,7 @@ app.get('/', (req, res) => {
     res.status(200).json({title: "Hello"})
 })
 
-app.get('/:id', (req, res) => {
-    res.status(200).json({ 'id': req.params.id })
-})
-
-app.post('/', (req, res) => {
-    res.status(200).json(req.body);
-})
-
+app.use(errorMiddleware)
 
 app.listen(3000, () => {
     console.log('3000 portundan server ayaklandı.')

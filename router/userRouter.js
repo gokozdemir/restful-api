@@ -35,7 +35,7 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const result = await User.findByIdAndDelete({ _id: req.params.id });
         if (result) {
@@ -43,12 +43,12 @@ router.delete('/:id', async (req, res) => {
                 mesaj: "Kullanıcı silindi"
             })
         } else {
-            return res.status(404).json({
-                mesaj: "Kullanıcı bulunamadı"
-            })
+            const errorObject = new Error('User is not found!')
+            errorObject.errorCode = 404;
+            throw errorObject;
         }
     } catch (err) {
-        console.log("Silerken hata çıktı: " + err)
+        next(err)
     }
 })
 

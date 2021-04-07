@@ -11,13 +11,20 @@ router.get('/:id', (req, res) => {
     res.status(200).json({ mesaj: req.params.id + 'idli kullanıcını getirilecek' })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         const userToAdd = new User(req.body);
-        const result = await userToAdd.save();
-        res.json(result)
+        const { error, value } = userToAdd.joiValidation(req.body);
+
+        if (error) {
+            next(createError(400, error))
+        } else {
+            const result = await userToAdd.save();
+            res.json(result)
+        }
+
     } catch (err) {
-        console.log('Kaydederken hata : ' + err)
+        next(err)
     }
 })
 
@@ -25,18 +32,24 @@ router.patch('/:id', async (req, res, next) => {
     delete req.body.createdAt;
     delete req.body.updatedAt;
     delete req.body.password;
-    
-    try{
-        const sonuc = await User.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true, runValidators:true});
-        if(sonuc){
-            return res.json(sonuc);
-        }else{
-            return res.status(404).json({
-                mesaj : 'Kullanıcı Bulunamadı'
-            })
+
+    const { error, value } = User.joiValidationForUpdate(req.body)
+
+    if (error) {
+        next(createError(400, error))
+    } else {
+        try {
+            const sonuc = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true });
+            if (sonuc) {
+                return res.json(sonuc);
+            } else {
+                return res.status(404).json({
+                    mesaj: 'Kullanıcı Bulunamadı'
+                })
+            }
+        } catch (err) {
+            next(err)
         }
-    }catch(err){
-        next(err)
     }
 })
 

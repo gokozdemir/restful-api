@@ -5,7 +5,7 @@ const errorCatcher = (err, req, res, next) => {
 
     if(err.code === 11000){
         return res.json({
-            message: JSON.stringify(err.keyValue) + " must be unique",
+            message: 'The ' + Object.values(err.keyValue) + ' value you entered for ' + Object.keys(err.keyValue) + ' cannot be updated or added because it is already in the database. It must be unique.',
             errorCode: 400
         })
     }
@@ -16,6 +16,7 @@ const errorCatcher = (err, req, res, next) => {
         })
     }
 
+    res.status(err.statusCode || 500)
     res.json({
         errorCode: err.statusCode || 400,
         message: err.message

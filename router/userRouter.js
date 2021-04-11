@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../dbMongo/models/userModel')
 const createError = require('http-errors')
+const bcrypt = require('bcrypt')
 
 router.get('/', async (req, res) => {
     const allUsers = await User.find({});
@@ -14,6 +15,7 @@ router.get('/:id', (req, res) => {
 router.post('/', async (req, res, next) => {
     try {
         const userToAdd = new User(req.body);
+        userToAdd.password = await bcrypt.hash(userToAdd.password, 10)
         const { error, value } = userToAdd.joiValidation(req.body);
 
         if (error) {
@@ -31,7 +33,10 @@ router.post('/', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
     delete req.body.createdAt;
     delete req.body.updatedAt;
-    delete req.body.password;
+    
+    if(req.body.hasOwnProperty('password')){
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
 
     const { error, value } = User.joiValidationForUpdate(req.body)
 

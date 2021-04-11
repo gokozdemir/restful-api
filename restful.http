@@ -19,9 +19,9 @@ Content-Type: application/json
 
 {
     "name": "gökhan1 özdemir",
-    "email": "ozdemirgok16@gmal.co",
-    "userName": "godaqd",
-    "password": "12345"
+    "email": "ozdemirgok186@gmal.co",
+    "userName": "godaqdfgsdd",
+    "password": "sdfserg34523"
 }
 
 ###
@@ -44,7 +44,7 @@ PATCH {{BASE_URL}}/users/6065b7da19a18c26dc193e0d
 Content-Type: application/json
 
 {
-    "email": "sdsd@sdsd.cv"
+    "password": "gokhan"
 }
 
 ###

@@ -30,11 +30,20 @@ router.post('/', async (req, res, next) => {
     }
 })
 
+router.post('/login', async (req, res, next) => {
+    try {
+        const user = await User.login(req.body.email, req.body.password)
+        res.json(user)
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.patch('/:id', async (req, res, next) => {
     delete req.body.createdAt;
     delete req.body.updatedAt;
-    
-    if(req.body.hasOwnProperty('password')){
+
+    if (req.body.hasOwnProperty('password')) {
         req.body.password = await bcrypt.hash(req.body.password, 10);
     }
 

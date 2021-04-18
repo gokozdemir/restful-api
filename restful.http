@@ -19,8 +19,8 @@ Content-Type: application/json
 
 {
     "name": "gökhan özdemir",
-    "email": "ozdemirgok18@gmail.com",
-    "userName": "gokhan",
+    "email": "ozdemirgok1811@gmail.com",
+    "userName": "gokhan11",
     "password": "123456"
 }
 
@@ -29,7 +29,7 @@ POST {{BASE_URL}}/users/login
 Content-Type: application/json
 
 {
-    "email": "ozdemirgok18@gmail.com",
+    "email": "ozdemirgok1811@gmail.com",
     "password": "123456"
 }
 
@@ -49,11 +49,12 @@ Content-Type: application/x-www-form-urlencoded
 username=gokhan&yas=32
 
 ###
-PATCH {{BASE_URL}}/users/606dc4d8b40e5457cb296216
+PATCH {{BASE_URL}}/users/me
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDc5Yjk0YWNkYTRmNDljNjQyNDBkNWYiLCJpYXQiOjE2MTg3ODcyODMsImV4cCI6MTYxODc5MDg4M30.L0ubzc2D5iFne2usr4cFm46oGDnCiwUvBlJY-xX-W3w
 
 {
-    "password": "gokhan"
+    "password": "gokhan123"
 }
 
 ###

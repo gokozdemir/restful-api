@@ -3,8 +3,9 @@ const User = require('../dbMongo/models/userModel')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 const authMiddleware = require('../dbMongo/middleware/authMiddleware')
+const adminMiddleware = require('../dbMongo/middleware/adminMiddleware')
 
-router.get('/', async (req, res) => {
+router.get('/', [authMiddleware, adminMiddleware] ,async (req, res) => {
     const allUsers = await User.find({});
     res.json(allUsers)
 })
@@ -76,6 +77,52 @@ router.post('/login', async (req, res, next) => {
     }
 })
 
+router.delete('/me', authMiddleware, async (req, res, next) => {
+    try {
+        console.log(req.user._id)
+        const result = await User.findByIdAndDelete({ _id: req.user.id });
+        if (result) {
+            return res.json({
+                mesaj: "Kullanıcı silindi"
+            })
+        } else {
+            throw createError(404, 'User is not found');
+        }
+    } catch (err) {
+        next(createError(400, err))
+    }
+})
+
+router.get('/deleteAll', [authMiddleware, adminMiddleware], async (req, res, next) => {
+    try {
+        const result = await User.deleteMany({isAdmin: false});
+        if (result) {
+            return res.json({
+                mesaj: "Tüm kullanıcılar silindi"
+            })
+        } else {
+            throw createError(404, 'User is not found');
+        }
+    } catch (err) {
+        next(createError(400, err))
+    }
+})
+
+router.delete('/:id', [authMiddleware, adminMiddleware], async (req, res, next) => {
+    try {
+        const result = await User.findByIdAndDelete({ _id: req.params.id });
+        if (result) {
+            return res.json({
+                mesaj: "Kullanıcı silindi"
+            })
+        } else {
+            throw createError(404, 'User is not found');
+        }
+    } catch (err) {
+        next(createError(400, err))
+    }
+})
+
 router.patch('/:id', async (req, res, next) => {
     delete req.body.createdAt;
     delete req.body.updatedAt;
@@ -104,19 +151,6 @@ router.patch('/:id', async (req, res, next) => {
     }
 })
 
-router.delete('/:id', async (req, res, next) => {
-    try {
-        const result = await User.findByIdAndDelete({ _id: req.params.id });
-        if (result) {
-            return res.json({
-                mesaj: "Kullanıcı silindi"
-            })
-        } else {
-            throw createError(404, 'User is not found');
-        }
-    } catch (err) {
-        next(createError(400, err))
-    }
-})
+
 
 module.exports = router;

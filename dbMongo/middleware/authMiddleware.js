@@ -4,14 +4,24 @@ const User = require('../models/userModel')
 const auth = async (req, res, next) => {
 
     try{
-        const token = req.header('Authorization').replace('Bearer ', '')
-        const result = jwt.verify(token, 'secretkey')
+        if (req.header('Authorization'))
+        {
+            const token = req.header('Authorization').replace('Bearer ', '');
+            const result = jwt.verify(token, 'secretkey');
+          
+            const findedUser = await User.findById({ _id: result._id });
 
-        
+            if (findedUser){
+                req.user = findedUser;
+            }
+            else {
+                throw new Error('Lütfen giriş yapın');
+            }
+            next();
+        } else {
+            throw new Error('Lütfen giriş yapın');
+        }
 
-        req.user = await User.findById({_id: result._id})
-
-        next()
     }catch(err){
         next(err)
     }

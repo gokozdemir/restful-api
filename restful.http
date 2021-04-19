@@ -5,6 +5,7 @@ GET {{BASE_URL}}
 
 ###
 GET {{BASE_URL}}/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDdkNmVkMGVjODMxNTJmMGFmZTE1ODAiLCJpYXQiOjE2MTg4MzU0MDYsImV4cCI6MTYxODgzOTAwNn0.YrsOT4OVhYQy81HcxRSwV6MQSAbN4_1XkvdOzKKDWXM
 
 ###
 GET {{BASE_URL}}/users/99
@@ -14,13 +15,18 @@ GET {{BASE_URL}}/users/99
 GET http://localhost:3000/
 
 ###
+GET {{BASE_URL}}/users/deleteAll
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDdkNmVkMGVjODMxNTJmMGFmZTE1ODAiLCJpYXQiOjE2MTg4NDM2ODUsImV4cCI6MTYxODg0NzI4NX0.FQYfANN2nYG_E2Od6p_Xv8UgNrOpUXBMVSwyWLnak44
+
+###
 POST {{BASE_URL}}/users
 Content-Type: application/json
 
 {
     "name": "gökhan özdemir",
-    "email": "ozdemirgok1811@gmail.com",
-    "userName": "gokhan11",
+    "email": "ozdemirgok18@gmail.com",
+    "userName": "gokhan",
     "password": "123456"
 }
 
@@ -29,7 +35,7 @@ POST {{BASE_URL}}/users/login
 Content-Type: application/json
 
 {
-    "email": "ozdemirgok1811@gmail.com",
+    "email": "ozdemirgok18@gmail.com",
     "password": "123456"
 }
 
@@ -57,6 +63,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDc5Yjk0Y
     "password": "gokhan123"
 }
 
+# ###
+# DELETE {{BASE_URL}}/users/6067085b824d592c4c11109
+
 ###
-DELETE {{BASE_URL}}/users/6067085b824d592c4c11109
+DELETE  {{BASE_URL}}/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDdkYTUzNWEzMzA2YzI1MWNmY2Y3ZjMiLCJpYXQiOjE2MTg4NDcwMzQsImV4cCI6MTYxODg1MDYzNH0.FYoctK7PkjdkxedwUan07xJNfJGjT-yXHiXtEwYINdo
+
+
+
 
